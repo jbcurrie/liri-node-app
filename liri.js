@@ -160,8 +160,7 @@ function randomTxt() {
         });
     }
 }
-// fs read random text
-// parameter for function is this now
+
 movieThis(trigger)
 spotifyThis(trigger)
 myTweets(trigger);

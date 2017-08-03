@@ -1,0 +1,33 @@
+
+Command: movie-this, Keyword: the batman 
+----------Result---------
+Movie Title: The Batman
+Release Year: 2012
+IMDB Rating: N/A
+IMDB Rating: 4.4/10
+Country(ies) where the movie was produced: UK
+Movie Language: English
+Plot: Chronicling the first encounter between Gotham city's masked vigilante, The Batman and his arch nemesis, The Joker.
+Actors: M. Layton Taylor
+
+Command: movie-this, Keyword: the batman 
+----------Result---------
+Movie Title: The Batman
+Release Year: 2012
+IMDB Rating: N/A
+IMDB Rating: 4.4/10
+Country(ies) where the movie was produced: UK
+Movie Language: English
+Plot: Chronicling the first encounter between Gotham city's masked vigilante, The Batman and his arch nemesis, The Joker.
+Actors: M. Layton Taylor
+
+Command: movie-this, Keyword: the batman 
+----------Result---------
+Movie Title: The Batman
+Release Year: 2012
+IMDB Rating: 4.4/10
+No Rotten Tomatoes Rating
+Country(ies) where the movie was produced: UK
+Movie Language: English
+Plot: Chronicling the first encounter between Gotham city's masked vigilante, The Batman and his arch nemesis, The Joker.
+Actors: M. Layton Taylor

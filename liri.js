@@ -8,9 +8,18 @@ var fs = require("fs");
 var twitterKeys = tokens.twitterKeys;
 var spotifyKeys = tokens.spotifyKeys;
 var omdbKeys = tokens.omdbKeys;
-var rndTrigger,trigger,song,movie,input,data;
+var trigger = process.argv[2];
+var rndTrigger,data;
+var input = "";
 
-//log data to a .txt file
+function stringInput () {
+    for (var i=3; i < process.argv.length; i++) {
+        input += process.argv[i];
+        input += " "
+    }
+    // console.log(input);
+    return input;
+}
 function writeFile (data) {
     fs.appendFile("log.txt",data,"utf8",function(err) {
         if (err) {
@@ -21,7 +30,7 @@ function writeFile (data) {
 // my-tweets
 // This will show your last 20 tweets and when they were created at in your terminal/bash window.
 function myTweets (trigger) {
-    trigger = process.argv[2] || rndTrigger;
+    // trigger = process.argv[2] || rndTrigger;
     if (trigger === 'my-tweets' || rndTrigger === 'my-tweets') {
 
         var client = new Twitter({
@@ -56,11 +65,12 @@ Status: ${tweets[i].text}` + "\n";
 //spotify
     //`node liri.js spotify-this-song '<song name here>'`
     //    * If no song is provided then your program will default to "The Sign" by Ace of Base.
-function spotifyThis(trigger,song) {
+function spotifyThis(trigger) {
     // console.log(rndTrigger);
-    trigger = process.argv[2];
+    // trigger = process.argv[2];
     // console.log(trigger);
-    song = process.argv[3] || input || "The Sign";
+    stringInput();
+    var song = input || "The Sign";
     // console.log(song);
     if (trigger === 'spotify-this-song' || rndTrigger === 'spotify-this-song') {
         var spotify = new Spotify({
@@ -94,23 +104,30 @@ Album/Single: ${response.tracks.items[i].album.name}` + "\n";
 }
 // 3. `node liri.js movie-this '<movie name here>'`
 //    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-function movieThis(trigger,movie){
-    trigger = process.argv[2];
+function movieThis(trigger){
+    // trigger = process.argv[2];
     if (trigger === "movie-this" || rndTrigger === "movie-this") {
-        movie = process.argv[3] || input || "Mr.+Nobody";
+        stringInput();
+        var movie = input || "Mr.+Nobody";
+        console.log(movie);
         var queryUrl = `http://www.omdbapi.com/?t=${movie}&r=json&type=movie&plot=short&apikey=40e9cece`
 
         request(queryUrl, function (error, response, body) {
             console.log('error:', error); // Print the error if one occurred 
             // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
             // console.log('body:',JSON.parse(body)); // 
+            if (!JSON.parse(body).Ratings[1]) {
+               var rating = `No Rotten Tomatoes Rating`
+            } else {
+                rating = `Rotten Tomatoes Rating: ${JSON.parse(body).Ratings[1].Value}`
+            };
             data = 
 "\n" + `Command: ${trigger}, Keyword: ${movie}
 ----------Result---------
 Movie Title: ${JSON.parse(body).Title}
 Release Year: ${JSON.parse(body).Year}
-IMDB Rating: ${JSON.parse(body).Rated}
-Rotten Tomatoes Rating: ${JSON.parse(body).Ratings[1].Value}
+IMDB Rating: ${JSON.parse(body).Ratings[0].Value}
+${rating}
 Country(ies) where the movie was produced: ${JSON.parse(body).Country}
 Movie Language: ${JSON.parse(body).Language}
 Plot: ${JSON.parse(body).Plot}
@@ -134,9 +151,10 @@ function randomTxt() {
             rndTrigger = dataArr[0];
             // console.log(rndTrigger)
             input = dataArr[1];
+            stringInput(input);
             // console.log(input)
-            movieThis(rndTrigger,input)
-            spotifyThis(rndTrigger,input)
+            movieThis(rndTrigger)
+            spotifyThis(rndTrigger)
             myTweets(rndTrigger);
             // console.log(dataArr);
         });
@@ -144,7 +162,7 @@ function randomTxt() {
 }
 // fs read random text
 // parameter for function is this now
-movieThis(process.argv[2],process.argv[3])
-spotifyThis(process.argv[2],process.argv[3])
-myTweets(process.argv[2]);
+movieThis(trigger)
+spotifyThis(trigger)
+myTweets(trigger);
 randomTxt();

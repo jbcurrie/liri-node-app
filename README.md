@@ -63,3 +63,4 @@ liri.js can take in one of the following commands:
      
      * Feel free to change the text in that document to test out the feature for other commands.
 
+* **required technologies:** *node.js*
